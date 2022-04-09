@@ -66,23 +66,6 @@ def map_Check(map):
 				nice += [y_in*3+x_in]
 	print(nice)
 """
-
-def enemy_Check(dir):
-	"""警戒モード用"""
-	value = run.move("look",dir)
-	far = False
-	if dir == 1:
-		if value.index(1) < 3:
-			far = True
-	elif dir == 3:
-		if value.index(1):
-			far = True
-	elif dir == 5:
-		if value.index():
-			far = True
-	elif dir == 7:
-		if value.index():
-			far = True
 	
 def solve_diagonal(target, com):
 	"""斜めに物が見えた時の処理"""
@@ -116,17 +99,16 @@ def Checker(last, ready_Value, turn) -> int:
 				priority[i] += 1
 			else:
 				solve_diagonal(i, "get")
-
-	else:  # Danger Command
-		for i in range(0, 9):
-			if ready_Value[i] == 1:  # Can I put there now?
-				if i % 2 == 0:
-					solve_diagonal(i, "avoid")
-				else:
-					run.move("put", i)
-					break
-			if ready_Value[i] == 2:  # There is a block?
-				priority[i] = -2
+	# Danger Command
+	for i in range(0, 9):
+		if ready_Value[i] == 1:  # Can I put there now?
+			if i % 2 == 0:
+				solve_diagonal(i, "avoid")
+			else:
+				run.move("put", i)
+				break
+		if ready_Value[i] == 2:  # There is a block?
+			priority[i] = -2
 
 	max = priority[1]  # maximum value
 	nowmax = [1]  # direction index who it has maximum
