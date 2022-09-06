@@ -15,7 +15,7 @@ class Command():
 
         run = CHaser.Client()
         mapcont = Make_Map.Make_map()
-        """set instance"""
+        """Set instance"""
 
     def move(self,com, dir):
         """
