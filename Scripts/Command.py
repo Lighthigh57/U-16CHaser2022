@@ -5,16 +5,12 @@ class Command():
     """
     各種行動を起こします。
     """
-    run = None
-    ready_OK = False
-    mapcont = None
 
     def __init__(self):
-        global run
-        global mapcont
 
-        run = CHaser.Client()
-        mapcont = Make_Map.Make_map()
+        self.run = CHaser.Client()
+        self.mapcont = Make_Map.Make_map()
+        self.ready_OK = False
         """Set instance"""
 
     def move(self,com, dir):
@@ -22,77 +18,73 @@ class Command():
         各種行動を起こします。
         Get_info忘れないで！
         """
-        global run
-        global ready_OK
 
         result = [0 for i in range(9)]
 
-        if ready_OK == False: #if didn't get_ready()
+        if self.ready_OK == False: #if didn't get_ready()
             self.get_ready()
             print("Warning!:You didn't get_ready().")
 
         if com == "put":
             if dir == 1:
-                result = run.put_up()
+                result = self.run.put_up()
             if dir == 7:
-                result = run.put_down()
+                result = self.run.put_down()
             if dir == 3:
-                result = run.put_left()
+                result = self.run.put_left()
             if dir == 5:
-                result = run.put_right()
+                result = self.run.put_right()
 
         if com == "walk":
             if dir == 1:
-                result = run.walk_up()
-                mapcont.mapY -= 1
+                result = self.run.walk_up()
+                self.mapcont.mapY -= 1
             if dir == 7:
-                result = run.walk_down()
-                mapcont.mapY += 1
+                result = self.run.walk_down()
+                self.mapcont.mapY += 1
             if dir == 3:
-                result = run.walk_left()
-                mapcont.mapX -= 1
+                result = self.run.walk_left()
+                self.mapcont.mapX -= 1
             if dir == 5:
-                result = run.walk_right()
-                mapcont.mapX += 1
+                result = self.run.walk_right()
+                self.mapcont.mapX += 1
 
         if com == "look":
             if dir == 1:
-                result = run.look_up()
+                result = self.run.look_up()
             if dir == 7:
-                result = run.look_down()
+                result = self.run.look_down()
             if dir == 3:
-                result = run.look_left()
+                result = self.run.look_left()
             if dir == 5:
-                result = run.look_right()
+                result = self.run.look_right()
 
         if com == "search":
             if dir == 1:
-                result = run.search_up()
+                result = self.run.search_up()
             if dir == 7:
-                result = run.search_down()
+                result = self.run.search_down()
             if dir == 3:
-                result = run.search_left()
+                result = self.run.search_left()
             if dir == 5:
-                result = run.search_right()
+                result = self.run.search_right()
 
         print(com+" "+str(dir))
-        ready_OK = False
+        self.ready_OK = False
 
         return result
 
     def get_ready(self):
         """Lunch get_ready and return map."""
-        global run
-        global ready_OK
 
-        ready_OK = True
-        result = run.get_ready()
-        mapcont.UpData("G",0,result)
-        for list in mapcont.map:
+        self.ready_OK = True
+        result = self.run.get_ready()
+        self.mapcont.UpData("G",0,result)
+        for list in self.mapcont.map:
             print(list)
         return result
     
     def get_map(self):
         """MAPはこちらからどうぞ"""
-        return mapcont.map
+        return self.mapcont.map
         
